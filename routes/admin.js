@@ -31,12 +31,12 @@ router.post('/add_doctor', function (req, res, next) {
     ser.connection(dataQuery, ty = 1, function (oldData) {
 
         var new_id = oldData.recordset.length + 1;
-        var insertQuery = "insert into doctors (doctor_id,first_name,last_name,spc,phone,address) values ("+ new_id +",'" + req.body.firstName + "','" + req.body.lastName + "','" + req.body.docSpec + "','" + req.body.phoneNumber + "','" + req.body.address + "')";
+        var insertQuery = "insert into doctors (doctor_id,first_name,last_name,spc,phone,address) values (" + new_id + ",'" + req.body.firstName + "','" + req.body.lastName + "','" + req.body.docSpec + "','" + req.body.phoneNumber + "','" + req.body.address + "')";
         ser.connection(insertQuery, ty = 1, function (noData) {
-        
+
             var query = "select * from doctors select * from admin where admin_id = " + login.loginID + "";
             ser.connection(query, ty = 1, function (data) {
-        
+
                 res.render('adminDoctor', {
                     data: data,
                     id: login.loginID,
@@ -48,25 +48,23 @@ router.post('/add_doctor', function (req, res, next) {
 });
 
 
-router.post('/doctors', (req, res, next) => {
-    console.log(req.body.dell)
-    console.log("okokoko");
-    ser.connection(quiry = "delete from doctors where doctor_id = " + req.body.dell, ty = 0);
+router.post('/rmv_doctor', function (req, res) {
 
-    setTimeout(function () {
-        ser.connection(quiry = "select * from doctors", ty = 1, (recordset) => {
-            console.log(recordset);
+    var deleteQuery = "delete from doctors where doctor_id = " + req.body.dell;
+    ser.connection(deleteQuery, ty = 1, function (noData) {
+
+        var query = "select * from doctors select * from admin where admin_id = " + login.loginID + "";
+        ser.connection(query, ty = 1, function (data) {
+
             res.render('adminDoctor', {
-                data: recordset,
+                data: data,
                 id: login.loginID,
                 page: login.page
             });
         });
-    }, 1000)
+    });
 
 });
-
-
 
 
 module.exports = router;
