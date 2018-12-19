@@ -9,7 +9,7 @@ router.get('/',function(req,res,next){
     if(loginID === 0){
         res.render ('login', {
             validation: 0,
-            loginID: loginID
+            id: loginID
         });
     }
     else{
@@ -17,7 +17,7 @@ router.get('/',function(req,res,next){
         module.exports.loginID = loginID;
         res.render ('login', {
             validation: 0,
-            loginID: loginID
+            id: loginID
         });
     }
 
@@ -58,13 +58,15 @@ router.post('/',function(req,res){
                     page = 'patient';
                     loginID = user.patient_id;
                 }
+
+                module.exports.loginID = loginID;
+                module.exports.page = page;
+
                 res.render('about',{
                     id: loginID,
                     page: page
                 });
             }
-            module.exports.loginID = loginID;
-            module.exports.page = page;
         }
     });
 });

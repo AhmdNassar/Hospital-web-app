@@ -20,121 +20,29 @@
   <a href="#page-home" class="arrtp">
     <i style="color:#207fdd" class="fas fa-chevron-circle-up fa-3x arr-top"></i>
   </a>
-    <div class="login-screen">
-      <div class="container pt-5">
-          <div class="row">
-              <div class="col-md-4">
-              </div>
-              <div class="col-md-4">
-                <form class="form-app form-control my-2" action="">
-                  <h4 style="font-weight:bold;" class="py-4">Login Here</h4>
-                  <h6 style="font-size:14px;font-weight:bold;">E-MAIL</h6>
-                  <input class="form-control  my-3" placeholder="Email" type="email" name="" id="">
-                  <h6 style="font-size:14px;font-weight:bold;">PASSWORD</h6>
-                  <input class="form-control  my-3" placeholder="Enter your password" type="password" name="Pass" id="">
-                  <button style="width:30%;border-radius:20px;" class="btn btn-primary ml-5 my-3" type="submit" name="" id="">Log In</button>
-                  <button style="width:30%; border-radius:20px;border:none !important;" class="btn btn-danger ml-4 my-3">Register</button>
-                  <h6 class="text-center">Press ESC to close the window.</h6>
-                </form>
-              </div>
-          </div>
+  <div class="login-screen">
+    <div class="container pt-5">
+      <div class="row">
+        <div class="col-md-4">
+        </div>
+        <div class="col-md-4">
+          <form class="form-app form-control my-2" action="">
+            <h4 style="font-weight:bold;" class="py-4">Login Here</h4>
+            <h6 style="font-size:14px;font-weight:bold;">E-MAIL</h6>
+            <input class="form-control  my-3" placeholder="Email" type="email" name="" id="">
+            <h6 style="font-size:14px;font-weight:bold;">PASSWORD</h6>
+            <input class="form-control  my-3" placeholder="Enter your password" type="password" name="Pass" id="">
+            <button style="width:30%;border-radius:20px;" class="btn btn-primary ml-5 my-3" type="submit" name="" id="">Log
+              In</button>
+            <button style="width:30%; border-radius:20px;border:none !important;" class="btn btn-danger ml-4 my-3">Register</button>
+            <h6 class="text-center">Press ESC to close the window.</h6>
+          </form>
+        </div>
       </div>
+    </div>
   </div>
 
-
-  <% if(id===0){%>
-    <nav  class="navbar navbar-expand-lg navbar-light fixed-top">
-        <a class="navbar-brand ml-5 pl-5" href="/"><img src="./images/logo.png" alt="" style="height:40px;width:150px;"></a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-    
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item active navbar-items">
-              <a style="font-weight:bold;font-size:14px; " class="nav-link mr-3 sc1" href="/">Home
-                <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item active scrollable navbar-items">
-              <a style="font-weight:bold;font-size:14px;border:1px solid #d8d8d8;
-              " class="nav-link mr-3 sc2 "
-                href="/about">About <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item active navbar-items">
-              <a style="font-weight:bold;font-size:14px;" class="nav-link mr-3 sc3" href="/services">Service
-                <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item active navbar-items">
-              <a style="font-weight:bold;font-size:14px;" class="nav-link mr-3 sc4" href="/appointment">Appointmnet
-                <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item active navbar-items">
-              <a style="font-weight:bold;font-size:14px;" class="nav-link mr-3 sc5" href="/doctors">Doctors
-                <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item active navbar-items">
-              <a style="font-weight:bold;font-size:14px;" class="nav-link mr-3 sc6" href="/department">Department
-                <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item active navbar-items">
-              <a style="font-weight:bold;font-size:14px;" class="nav-link mr-3 sc7" href="/blog">Blog <span
-                  class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item active  scrollable navbar-items">
-              <a style="font-weight:bold;font-size:14px;" class="nav-link mr-3 sc8" href="#contact">Contact <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="mr-5 ">
-                <a id="login" href="/login" style="border-radius:20px;border:none !important;" class="btn btn-danger">Log In</a>
-              </li>
-          </ul>
-        </div>
-      </nav>
-    <%}else{%>
-      <nav style="display: flex" class="navbar navbar-expand-lg navbar-light fixed-top">
-        <a class="navbar-brand ml-5 pl-5" href="/"><img src="./images/logo.png" alt="" style="height:40px;width:150px;"></a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-      
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item active navbar-items">
-              <a style="font-weight:bold;font-size:14px;" class="nav-link mr-3 sc1" href="/">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item active navbar-items">
-              <a style="font-weight:bold;font-size:14px;" class="nav-link mr-3 sc2" href="/about">About <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item active navbar-items">
-              <a style="font-weight:bold;font-size:14px;" class="nav-link mr-3 sc3" href="/services">Service <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item active navbar-items">
-              <a style="font-weight:bold;font-size:14px;" class="nav-link mr-3 sc4" href="/appointment">Appointmnet <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item active navbar-items">
-              <a style="font-weight:bold;font-size:14px;" class="nav-link mr-3 sc5" href="/doctors">Doctors <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item active navbar-items">
-              <a style="font-weight:bold;font-size:14px;" class="nav-link mr-3 sc6" href="/department">Department <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item active navbar-items">
-              <a style="font-weight:bold;font-size:14px;" class="nav-link mr-3 sc7" href="/blog">Blog <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item active navbar-items">
-              <a style="font-weight:bold;font-size:14px;" class="nav-link mr-3 sc8" href="/contact">Contact <span class="sr-only">(current)</span></a>
-            </li>
-    
-            <img src="./images/doc1.png" style="height:50px;width:40px;border-radius: 50px;border:1px #a1a0a0;" alt="">
-            <li class="nav-item active navbar-items">
-                    <a href="/<%=page%>" style="font-weight:bold;font-size:14px;" class="nav-link mr-3 sc8" href="#contact">Profile <span class="sr-only">(current)</span></a>
-                  </li>
-    
-          </ul>
-        </div>
-    </nav>
-    <%}%>
-  
-
+  <% include partials/nav-bar.ejs %>
 
   <section id="page-home" class="   hvr-icon-hang w-100">
     <div class="home-layer pt-5 ">
@@ -279,13 +187,13 @@
   <section style="background-color:rgb(36, 36, 36)" id="copyright" class="py-3 text-center">
     <h6 style="color:white;">Copyright © 2016. All rights reserved</h6>
   </section>
-  
+
   <script src="./js/jquery-3.3.1.min.js"></script>
-    <script src="./js/popper.min.js"></script>
-    <script src="./js/bootstrap.min.js"></script>
-    <script src="./fontawesome-free-5.6.0-web/js/all.js"></script>
-    <script src="./js/main.js"></script>
-    <script src="./js/wow.min.js"></script>
+  <script src="./js/popper.min.js"></script>
+  <script src="./js/bootstrap.min.js"></script>
+  <script src="./fontawesome-free-5.6.0-web/js/all.js"></script>
+  <script src="./js/main.js"></script>
+  <script src="./js/wow.min.js"></script>
 
 </body>
 
