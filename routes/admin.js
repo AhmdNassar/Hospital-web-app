@@ -27,13 +27,40 @@ router.get('/doctors', function (req, res, next) {
 });
 
 router.post('/add_doctor', function (req, res, next) {
-    var dataQuery = "select * from doctors";
-    ser.connection(dataQuery, ty = 1, function (oldData) {
+    var docData = "select * from doctors";
+    ser.connection(docData, ty = 1, function (oldDoc) {
 
-        var new_id = oldData.recordset.length + 1;
-        var insertQuery = "insert into doctors (doctor_id,first_name,last_name,spc,phone,address) values (" + new_id + ",'" + req.body.firstName + "','" + req.body.lastName + "','" + req.body.docSpec + "','" + req.body.phoneNumber + "','" + req.body.address + "')";
-        ser.connection(insertQuery, ty = 1, function (noData) {
+        var docId = oldDoc.recordset.length + 1;
+        var insertDoc = "insert into doctors (doctor_id,first_name,last_name,spc,phone,address) values (" + docId + ",'" + req.body.firstName + "','" + req.body.lastName + "','" + req.body.docSpec + "','" + req.body.phoneNumber + "','" + req.body.address + "')";
+        ser.connection(insertDoc, ty = 1, function (noData) {
 
+            var insertUser = "insert into users (name,password,e_mail,doctor_id) values ('" + req.body.firstName + "','" + req.body.Pass + "','" + req.body.Mail + "'," + docId + ")";
+            ser.connection(insertUser, ty = 1, function (noData) {
+            
+                var query = "select * from doctors select * from admin where admin_id = " + login.loginID + "";
+                ser.connection(query, ty = 1, function (data) {
+
+                    res.render('adminDoctor', {
+                        data: data,
+                        id: login.loginID,
+                        page: login.page
+                    });
+                });
+            });
+        });
+    });
+
+});
+
+
+router.post('/rmv_doctor', function (req, res) {
+
+    var deleteUser = "delete from users where doctor_id = " + req.body.dell;
+    ser.connection(deleteUser, ty = 1, function (noData) {
+    
+        var deleteDoc = "delete from doctors where doctor_id = " + req.body.dell;
+        ser.connection(deleteDoc, ty = 1, function (noData) {
+        
             var query = "select * from doctors select * from admin where admin_id = " + login.loginID + "";
             ser.connection(query, ty = 1, function (data) {
 
@@ -42,24 +69,6 @@ router.post('/add_doctor', function (req, res, next) {
                     id: login.loginID,
                     page: login.page
                 });
-            });
-        });
-    });
-});
-
-
-router.post('/rmv_doctor', function (req, res) {
-
-    var deleteQuery = "delete from doctors where doctor_id = " + req.body.dell;
-    ser.connection(deleteQuery, ty = 1, function (noData) {
-
-        var query = "select * from doctors select * from admin where admin_id = " + login.loginID + "";
-        ser.connection(query, ty = 1, function (data) {
-
-            res.render('adminDoctor', {
-                data: data,
-                id: login.loginID,
-                page: login.page
             });
         });
     });
