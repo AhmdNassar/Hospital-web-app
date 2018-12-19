@@ -501,15 +501,15 @@ Call Center 24/7</h5>
               </div>
             </div>
 
-          </div>
-          
-          <div class="tab-pane fade" id="pills-dental" role="tabpanel" aria-labelledby="pills-dental-tab">
-            
-            <div class="container pt-5">
-              <div class="row">
-                  <% for(var i=0; i<data.recordsets[3].length;i++) {%>
-                  <div class="col-md-3">
-                      <div class="doc-card">
+        </div>
+
+        <div class="tab-pane fade" id="pills-dental" role="tabpanel" aria-labelledby="pills-dental-tab">
+
+          <div class="container pt-5">
+            <div class="row">
+              <% for(var i=0; i<data.recordsets[3].length;i++) {%>
+              <div class="col-md-3">
+                <div class="doc-card">
                         <img class="img-fluid" src="./images/doc<%=i+2%>.png" alt="">
                         <div class="doc-txt text-center">
                             <h5>Dr.<%=data.recordsets[3][i].first_name%> <%=data.recordsets[3][i].last_name%></h5>
