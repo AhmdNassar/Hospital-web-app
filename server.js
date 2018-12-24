@@ -30,14 +30,8 @@ var services = require('./routes/services');
 app.use('/services', services);
 var login = require('./routes/login').router;
 app.use('/login', login);
-var doc = require('./routes/doc');
-app.use('/doc', doc);
-var nurse = require('./routes/nurse');
-app.use('/nurse', nurse);
-var patient = require('./routes/patient');
-app.use('/patient', patient);
-var admin = require('./routes/admin');
-app.use('/admin', admin);
+var profile = require('./routes/profile');
+app.use('/profile', profile);
 var header = require('./routes/header');
 app.use('/about', header);
 var doctorPatients = require('./routes/doctorPatients');
@@ -59,8 +53,10 @@ if (app.get('env') === 'development') {
         res.status(err.status || 500);
         res.render('error', {
             message: err.message,
-            error: err
-        });
+            error: err,
+            id: login.loginID,
+            page: login.page
+            });
     });
 }
 
@@ -68,8 +64,10 @@ app.use(function (err, req, res, next) {
     res.status(err.status || 500);
     res.render('error', {
         message: err.message,
-        error: {}
-    });
+        error: {},
+        id: login.loginID,
+        page: login.page
+});
 });
 
 
@@ -84,7 +82,7 @@ var config = {
 };
 
 
-function connection(query, ty = 1, callback) {
+function connection(query, callback) {
     var conn = new sql.ConnectionPool(config);
     var req = new sql.Request(conn);
     conn.connect(function (err) {
@@ -92,11 +90,11 @@ function connection(query, ty = 1, callback) {
 
         // create Request object
         req.query(query, function (err, recordset) {
-            if (err) { 
-                console.log(err); 
-                return; 
+            if (err) {
+                console.log(err);
+                return;
             }
-            if (ty === 1) callback(recordset);
+            callback(recordset);
 
             conn.close();
         });

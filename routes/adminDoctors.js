@@ -1,16 +1,18 @@
 var express = require('express');
 var router = express.Router();
 var ser = require('../server');
+var login = require('./login');
 
-router.get('/',function(req,res,next){
+router.get('/', function (req, res, next) {
     console.log("");
-    ser.connection(query = "select * from doctors",ty=1, (recordset)=>{
-        console.log(recordset);
-        res.render ('adminDoctor',{
-             data:recordset
-         });
+    var query = "select * from doctors";
+    ser.connection(query, function (data) {
+        console.log(data);
+        res.render('adminDoctor', {
+            data: data
+        });
     });
-   
+
 })
 module.exports = router;
 
