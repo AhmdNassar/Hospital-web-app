@@ -32,7 +32,7 @@ var login = require('./routes/login').router;
 app.use('/login', login);
 var profile = require('./routes/profile');
 app.use('/profile', profile);
-var patientHistory = require('./routes/patientHistory');
+var patientHistory = require('./routes/Unused/patientHistory');
 app.use('/patientHistory', patientHistory);
 var adminDoctors = require('./routes/adminDoctors');
 app.use('/adminDoctors', adminDoctors);
