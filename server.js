@@ -32,10 +32,6 @@ var login = require('./routes/login').router;
 app.use('/login', login);
 var profile = require('./routes/profile');
 app.use('/profile', profile);
-var header = require('./routes/header');
-app.use('/about', header);
-var doctorPatients = require('./routes/doctorPatients');
-app.use('/doctorPatients', doctorPatients);
 var patientHistory = require('./routes/patientHistory');
 app.use('/patientHistory', patientHistory);
 var adminDoctors = require('./routes/adminDoctors');
@@ -55,8 +51,9 @@ if (app.get('env') === 'development') {
             message: err.message,
             error: err,
             id: login.loginID,
-            page: login.page
-            });
+            page: login.page,
+            not: "NINJA"
+        });
     });
 }
 
