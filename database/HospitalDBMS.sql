@@ -1,17 +1,17 @@
+use hospital1
 
+/*............... Drop Tables ............... */
 drop table salary
 drop table doctors
 drop table patients
-drop table admin
+drop table dbo.admin
 drop table nurse
 drop table users
 drop table history
 drop table rooms
 drop table ward_boy
 
-
-
-
+/*............... Select Statment ............... */
 select * from doctors 
 select * from patients 
 select * from dbo.admin
@@ -22,30 +22,28 @@ select * from rooms
 select * from ward_boy
 
 
+/*............... Create Tables ............... */
 
 create table nurse (
 nurse_id int ,
 first_name varchar(20) ,
 last_name varchar(20) ,
 phone char(12) ,
-salary int,
+salary decimal(10,2),
 address varchar(40),
 primary key (nurse_id)
-
 )
 
 create table doctors (
-doctor_id int ,
+doctor_id int identity(1,1) primary key ,
 first_name varchar(20) ,
 last_name varchar(20) ,
 spc varchar(30) ,
 phone char(12) ,
-salary int,
+salary decimal(10,2),
 address varchar(40),
 arrival time ,
 leave time 
-primary key (doctor_id)
-
 )
 
 create table patients (
@@ -57,10 +55,14 @@ address varchar(40),
 doctor_id int ,
 nurse_id int ,
 primary key (patient_id),
-foreign key (doctor_id) references doctors(doctor_id) ,
-foreign key (nurse_id) references nurse(nurse_id)
-
+FOREIGN KEY (doctor_id)
+REFERENCES doctors(doctor_id)
+ON DELETE SET NULL,
+FOREIGN KEY (nurse_id)
+REFERENCES nurse(nurse_id)
+ON DELETE SET NULL
 )
+
 create table admin (
 admin_id int ,
 first_name varchar(20) ,
@@ -68,17 +70,16 @@ last_name varchar(20) ,
 phone char(12) ,
 address varchar(40),
 primary key (admin_id)
-
 )
+
 create table ward_boy (
 ward_id int ,
 first_name varchar(20) ,
 last_name varchar(20) ,
 phone char(12) ,
-salary int,
+salary decimal(10,2),
 address varchar(40),
 primary key (ward_id)
-
 )
 
 create table rooms (
@@ -86,7 +87,9 @@ room_id int ,
 type varchar(20) ,
 patient_id int ,
 primary key (room_id,type),
-foreign key (patient_id) references patients(patient_id)
+  FOREIGN KEY (patient_id)
+  REFERENCES patients(patient_id)
+  ON DELETE SET NULL
 )
 
 
@@ -97,8 +100,10 @@ date_leave datetime ,
 disease varchar(30),
 treatment varchar(30),
 chronic tinyint,
-bill decimal,
-foreign key (patient_id) references patients(patient_id)
+bill decimal(10,2),
+FOREIGN KEY (patient_id)
+  REFERENCES patients(patient_id)
+  ON DELETE SET NULL
 )
 
 
@@ -112,25 +117,35 @@ patient_id int,
 nurse_id int ,
 admin_id int ,
 primary key (e_mail),
-foreign key (doctor_id) references doctors(doctor_id),
-foreign key (nurse_id) references nurse(nurse_id),
-foreign key (admin_id) references admin(admin_id),
-foreign key (patient_id) references patients(patient_id)
-
+FOREIGN KEY (doctor_id)
+  REFERENCES doctors(doctor_id)
+  ON DELETE cascade,
+FOREIGN KEY (nurse_id)
+  REFERENCES nurse(nurse_id)
+  ON DELETE cascade,
+FOREIGN KEY (admin_id)
+  REFERENCES admin(admin_id)
+  ON DELETE cascade,
+FOREIGN KEY (patient_id)
+  REFERENCES patients(patient_id)
+  ON DELETE cascade
 )
 
 
+
+/*............... Insert Into Tables ............... */
+
 select * from doctors 
-insert into doctors values(1, 'Ammar', 'Ahmed', 'ALLERGY & IMMUNOLOGY', '000', 10000,'Mahala', '8:00', '1:00');
-insert into doctors values(2, 'Abdelrahman', 'Salim', 'ANESTHESIOLOGY', '000', 100000,'Tanta', '8:00', '12:00');
-insert into doctors values(3, 'Sallam', 'Ahmed', 'DERMATOLOGY', '000', 1000,'santa', '8:00', '1:00');
-insert into doctors values(4, 'Ahmed', 'Nassar', 'DIAGNOSTIC RADIOLOGY', '000', 10, 'Tanta', '8:00', '12:00');
-insert into doctors values(5, 'Mahmoud', 'Youssef', 'EMERGENCY MEDICINE', '000', 100000,'Tanta', '8:00', '12:00');
-insert into doctors values(6, 'Hamada', 'Seleim', 'FAMILY MEDICINE', '000', 100000,'Tanta', '8:00', '12:00');
-insert into doctors values(7, 'Mohammed', 'Mahmoud', 'INTERNAL MEDICINE', '000', 100000,'Tanta', '8:00', '12:00');
-insert into doctors values(8, 'Hamza', 'Younes', 'MEDICAL GENETICS', '000', 100000,'Tanta', '8:00', '12:00');
-insert into doctors values(9, 'Mahmoud', 'Essam', 'NEUROLOGY', '000', 100000,'Tanta', '8:00', '12:00');
-insert into doctors values(10, 'Mahmoud', 'Samy', 'NUCLEAR MEDICINE', '000', 100000,'Tanta', '8:00', '12:00');
+insert into doctors values('Ammar', 'Ahmed', 'Heart disease', '000', 10000,'Mahala', '8:00', '1:00');
+insert into doctors values('Abdelrahman', 'Salim', 'Hepatology', '000', 100000,'Tanta', '8:00', '12:00');
+insert into doctors values('Sallam', 'Ahmed', 'Huntington', '000', 1000,'santa', '8:00', '1:00');
+insert into doctors values('Ahmed', 'Nassar', 'Dental', '000', 10, 'Tanta', '8:00', '12:00');
+insert into doctors values('Mahmoud', 'Youssef', 'Ophthalmology', '000', 100000,'Tanta', '8:00', '12:00');
+insert into doctors values('Hamada', 'Seleim', 'Otology', '000', 100000,'Tanta', '8:00', '12:00');
+insert into doctors values('Mohammed', 'Mahmoud', 'Heart disease', '000', 100000,'Tanta', '8:00', '12:00');
+insert into doctors values('Hamza', 'Younes', 'Hepatology', '000', 100000,'Tanta', '8:00', '12:00');
+insert into doctors values('Mahmoud', 'Essam', 'Heart disease', '000', 100000,'Tanta', '8:00', '12:00');
+insert into doctors values('Mahmoud', 'Samy', 'Dental', '000', 100000,'Tanta', '8:00', '12:00');
 
 select * from users
 insert into users values('Ammar', '123', 'Ammar@tanta.eg', 1, NULL, NULL, NULL);
@@ -220,6 +235,10 @@ insert into patients values(18, 'HH', 'Ahmed', '000', 'Mansoura', 10, 8);
 insert into patients values(19, 'II', 'Ahmed', '000', 'Mahala', 9, 9);
 insert into patients values(20, 'JJ', 'Ahmed', '000', 'Mansoura', 5,1);
 
+
+insert into users values ('Ahmed','123','ahmedss@gmail.com',NULL,11,NULL,NULL)
+
+
 select * from history
 
 
@@ -246,5 +265,3 @@ insert into history values(18, 1, 3, 'heart', 'barastamol', 1, 1900.0);
 insert into history values(19, 1, 3, 'heart', 'barastamol', 1, 2000.0);
 insert into history values(20, 1, 3, 'heart', 'bills', 0, 100.0);
 
-
--- no rooms inserted

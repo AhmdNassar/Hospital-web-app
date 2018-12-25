@@ -9,4 +9,12 @@ $(document).ready(function () {
             $(".navbar").css("opacity","1")
         }
     })
-  })
+  });
+
+  $(".arr").click(function (e) {
+    e.preventDefault();
+    var target = $(this).attr("href")
+    $("html, body").animate({
+        scrollTop : ($(target).offset().top)
+    },800)
+  });

@@ -83,12 +83,10 @@ function connection(query, callback) {
     var conn = new sql.ConnectionPool(config);
     var req = new sql.Request(conn);
     conn.connect(function (err) {
-        if (err) console.log(err);
 
         // create Request object
         req.query(query, function (err, recordset) {
             if (err) {
-                console.log(err);
                 return;
             }
             callback(recordset);

@@ -10,21 +10,25 @@ var dep = $("#department").offset().top;
 var blog = $("#blog").offset().top;
 var cont = $("#contact").offset().top;
 
-document.getElementById("#login").onclick = function () {
-    location.href = "login.html";
-};
+
+navBar();
+
+function navBar(){
     $("nav").find("a").click(function (e) { 
+        console.log("here");
         e.preventDefault();
-        var target = $(this).attr("href")
+        var target = $(this).attr("href");
+        console.log("here");
+        if(target == "/login")
+        {
+            location.href = "/login"
+        }
         $("html, body").animate({
-            scrollTop : ($(target).offset().top)+20
+            scrollTop : ($(target).offset().top)+40
         },800)
         
     });
-
-
-    
-
+}
 // Change the navbar color while scrolling .. 
 $(document).ready(function () {
     $(window).scroll(function(){
@@ -65,11 +69,11 @@ $(window).scroll(function () {
           scrollTop: ($("#why-us").offset().top)
       },800)
   });
-
     $(window).scroll(function(){
         var scroll = $(window).scrollTop();
         if (scroll >= home && scroll < about )
-        {   $(".sc1").css("border","1px solid #d8d8d8")    
+        {  
+            $(".sc1").css("border","1px solid #d8d8d8")    
             $(".sc2").css("border","none")
             $(".sc3").css("border","none")
             $(".sc4").css("border","none")
