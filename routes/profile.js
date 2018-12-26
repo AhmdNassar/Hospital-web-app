@@ -37,14 +37,32 @@ router.get('/', function (req, res, next) {
 
 router.get('/myPatients', function (req, res, next) {
     if (login.page == 'doc') {
-        var query = "select * from doctors where doctor_id=" + login.loginID + " select * from patients where doctor_id=" + login.loginID + " select * from history where patient_id = any (select patient_id from patients where doctor_id=" + login.loginID + ")";
-        ser.connection(query, function (data) {
-            res.render('doctorPatients', {
-                data: data,
-                id: login.loginID,
-                page: login.page
-            })
-        })
+        
+        if(req.query.p === undefined){
+            var query = "select * from doctors where doctor_id=" + login.loginID + " select * from patients where doctor_id=" + login.loginID + " select * from history where patient_id = any (select patient_id from patients where doctor_id=" + login.loginID + ")";
+            ser.connection(query, function (data) {
+                res.render('doctorPatients', {
+                    p: 0,
+                    data: data,
+                    id: login.loginID,
+                    page: login.page
+                })
+            })    
+        }
+
+        else{
+            var query = "select * from doctors where doctor_id=" + login.loginID + " select * from patients where patient_id=" + req.query.p + " select * from history where patient_id=" + req.query.p + " ";
+            ser.connection(query, function (data) {
+                console.log(data);
+                res.render('doctorPatients', {
+                    p: 1,
+                    data: data,
+                    id: login.loginID,
+                    page: login.page
+                })
+            })    
+        }
+
     }
     else {
         res.render('error', {
