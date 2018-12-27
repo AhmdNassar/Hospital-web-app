@@ -38,7 +38,17 @@ router.get('/', function (req, res, next) {
 router.get('/myPatients', function (req, res, next) {
     if (login.page == 'doc') {
         
-        if(req.query.p === undefined){
+        if(req.query.s != undefined){
+            if(req.query.s === '')
+                req.query.s = '?';
+            var query = "select * from patients where doctor_id=" + login.loginID + " and concat(concat(first_name, ' '),  last_name) like '" + req.query.s + "%'";
+            ser.connection(query, function (data) {
+                console.log(data);
+                res.send({data: data});
+            })
+        }
+        
+        else if(req.query.p === undefined){
             var query = "select * from doctors where doctor_id=" + login.loginID + " select * from patients where doctor_id=" + login.loginID + " select * from history where patient_id = any (select patient_id from patients where doctor_id=" + login.loginID + ")";
             ser.connection(query, function (data) {
                 res.render('doctorPatients', {

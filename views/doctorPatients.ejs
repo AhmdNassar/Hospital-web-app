@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Hospital</title>
+  <title>Profile</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="../css/animate.css">
   <link rel="stylesheet" href="../css/hover-min.css">
@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="../fontawesome-free-5.6.0-web/css/all.css">
   <link rel="stylesheet" type="text/css" media="screen" href="../css/index_style.css" />
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="../js/jquery-1.12.4.js"></script>
 
 </head>
 
@@ -95,6 +96,35 @@
         <div class="tab-content" id="v-pills-tabContent">
           <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
             <h1 class="text-center">Your Patients</h1>
+            <input class="form-control  my-5" onkeyup="get()" placeholder="Search for patients" type="text" name="patientSearch" id="patientSearch">
+
+            <%for(var i = 0; i < 10; i++){%>
+            <pre id="getResponse<%=i%>"></pre>
+            <%}%>
+            <script>
+              function get() {
+                $.ajax({
+                  type: 'GET',
+                  url: 'http://localhost:5050/profile/myPatients?s=' + document.getElementById("patientSearch").value,
+                  dataType: 'json'
+                })
+                  .done(function (data) {
+                    console.log(document.getElementById("patientSearch").value);
+                    for (var i = 0; i < data.data.recordset.length; i++) {
+                      $('#getResponse' + i).html(data.data.recordset[i].first_name + ' ' + data.data.recordset[i].last_name);
+                    }
+                    for (var i = data.data.recordset.length; i < 10; i++) {
+                      $('#getResponse' + i).html('');
+                    }
+                  })
+                  .fail(function (jqXHR, textStatus, err) {
+                    console.log('ajax error : ', textStatus);
+                  });
+              }
+            </script>
+
+
+
             <table style="color:#207fdd;" class="table mt-5">
               <thead>
                 <tr>
@@ -142,6 +172,7 @@
               <h1 class="text-center">
                 <%=data.recordsets[1][0].first_name%>
                 <%=data.recordsets[1][0].last_name%>'s History</h1>
+
               <table style="color:#207fdd;" class="table mt-5">
                 <thead>
                   <tr>
