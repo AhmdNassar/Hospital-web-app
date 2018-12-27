@@ -32,10 +32,6 @@ var login = require('./routes/login').router;
 app.use('/login', login);
 var profile = require('./routes/profile');
 app.use('/profile', profile);
-var test = require('./routes/test');
-app.use('/test', test);
-var ajaxtest= require('./routes/ajaxtest');
-app.use('/ajaxtest', ajaxtest);
 
 app.use(function (req, res, next) {
     var err = new Error('Not Found');
