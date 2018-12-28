@@ -133,7 +133,8 @@
               <th scope="col">Spec</th>
               <th scope="col">PhoneNumber</th>
               <th scope="col">Address</th>
-              <th scope="col">Edit</th>
+              <th scope="col">Delete</th>
+
             </tr>
           </thead>
           <tbody>
@@ -145,23 +146,46 @@
               </th>
               <td>
                 <%= data.recordset[i].first_name %>
+                <form scope="row" method="POST" action="/profile/edt_doctor">
+                  <input style="width:60%;" class="form-control  my-3" placeholder="First Name" type="text" name="firstName">
+                  <button style="width:30%;border-radius:20px;" class="btn btn-primary" type="submit" name="edit" value=" <%= data.recordset[i].doctor_id %> ">Edit</button>
+                </form>
               </td>
               <td>
                 <%= data.recordset[i].last_name %>
+                <form scope="row" method="POST" action="/profile/edt_doctor">
+                  <input style="width:60%;" class="form-control  my-3" placeholder="Last Name" type="text" name="lastName">
+                  <button style="width:30%;border-radius:20px;" class="btn btn-primary" type="submit" name="edit" value=" <%= data.recordset[i].doctor_id %> ">Edit</button>
+                </form>
               </td>
               <td>
                 <%= data.recordset[i].spc %>
+                <form scope="row" method="POST" action="/profile/edt_doctor">
+                  <input style="width:60%;" class="form-control  my-3" placeholder="Specialization" type="text" name="docSpec">
+                  <button style="width:30%;border-radius:20px;" class="btn btn-primary" type="submit" name="edit" value=" <%= data.recordset[i].doctor_id %> ">Edit</button>
+                </form>
               </td>
               <td>
                 <%= data.recordset[i].phone %>
+                <form scope="row" method="POST" action="/profile/edt_doctor">
+                  <input style="width:60%;" class="form-control  my-3" placeholder="Phone Number" type="text" name="phoneNumber">
+                  <button style="width:30%;border-radius:20px;" class="btn btn-primary" type="submit" name="edit" value=" <%= data.recordset[i].doctor_id %> ">Edit</button>
+                </form>
               </td>
               <td>
                 <%= data.recordset[i].address %>
+                <form scope="row" method="POST" action="/profile/edt_doctor">
+                  <input style="width:60%;" class="form-control  my-3" placeholder="Address" type="text" name="address">
+                  <button style="width:30%;border-radius:20px;" class="btn btn-primary" type="submit" name="edit" value=" <%= data.recordset[i].doctor_id %> ">Edit</button>
+                </form>
               </td>
               <td>
-                <form method="POST" action="/profile/rmv_doctor"><button type="submit" name="dell" value=" <%= data.recordset[i].doctor_id %> "
+                <form method="POST" action="/profile/rmv_doctor">
+                  <button type="submit" name="dell" value=" <%= data.recordset[i].doctor_id %> "
                     class="btn btn-primary">Remove</button></form>
               </td>
+
+              
             </tr>
             <% } %>
           </tbody>

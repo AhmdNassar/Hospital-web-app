@@ -13,6 +13,7 @@ app.locals.id = login.loginID;
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+const PORT = 5050;
 
 var routes = require('./routes/index');
 app.use('/', routes);
@@ -67,9 +68,9 @@ app.use(function (err, req, res, next) {
 var config = {
     user: 'sa',
     password: '123',
-    server: 'localhost\\Hospital',
-    database: 'Hospital',
-    port: 5050,
+    server: 'localhost\\SALIM',
+    database: 'hospital',
+    port: PORT,
     dialect: 'mssql'
 };
 
@@ -77,11 +78,12 @@ var config = {
 function connection(query, callback) {
     var conn = new sql.ConnectionPool(config);
     var req = new sql.Request(conn);
-    conn.connect(function (err) {
 
+    conn.connect(function (err) {
         // create Request object
         req.query(query, function (err, recordset) {
             if (err) {
+                console.log(err);
                 return;
             }
             callback(recordset);
@@ -92,8 +94,8 @@ function connection(query, callback) {
 }
 
 
-var server = app.listen(5050, function () {
-    console.log('Server is running..');
+var server = app.listen(PORT, function () {
+    console.log(`Server is running on port ${PORT}..`);
 });
 
 
