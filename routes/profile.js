@@ -223,5 +223,62 @@ router.post('/edit_history', function (req, res) {
 });
 
 
+router.post('/edt_doctor', function (req, res) {
+    
+    let toBeEdited, value;
+    console.log(req.body.edit, req.body.firstName);
+
+    if(req.body.firstName){
+        toBeEdited = 'first_name';
+        value = req.body.firstName;
+    }
+    else if(req.body.lastName){
+        toBeEdited = 'last_name';
+        value = req.body.lastName;
+    }
+    else if(req.body.docSpec){
+        toBeEdited = 'spc';
+        value = req.body.docSpec;
+    }
+    else if(req.body.phoneNumber){
+        toBeEdited = 'phone';
+        value = req.body.phoneNumber;
+    }
+    else if(req.body.address){
+        toBeEdited = 'address';
+        value = req.body.address;
+    }
+    else{
+        res.render('EditingError', {
+            id: login.loginID,
+            page: login.page,
+        });
+        return;
+    }
+
+    if (login.page == 'admin') {
+
+        var editDoc = "UPDATE doctors SET " + toBeEdited + " = '" + value + "' where doctor_id = " + req.body.edit;
+        ser.connection(editDoc, function (noData) {
+
+            var query = "select * from doctors select * from admin where admin_id = " + login.loginID + "";
+            ser.connection(query, function (data) {
+
+                res.render('adminDoctor', {
+                    data: data,
+                    id: login.loginID,
+                    page: login.page
+                });
+            });
+        });
+    }
+    else {
+    res.render('error', {
+        id: login.loginID,
+        page: login.page,
+        not: "Admin"
+    });
+}
+});
 
 module.exports = router;
