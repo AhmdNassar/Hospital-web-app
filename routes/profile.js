@@ -37,18 +37,30 @@ router.get('/', function (req, res, next) {
 
 router.get('/myPatients', function (req, res, next) {
     if (login.page == 'doc') {
-        
-        if(req.query.s != undefined){
-            if(req.query.s === '')
+
+        if (req.query.s != undefined) {
+            if (req.query.s === '')
                 req.query.s = '?';
             var query = "select * from patients where doctor_id=" + login.loginID + " and concat(concat(first_name, ' '),  last_name) like '" + req.query.s + "%'";
             ser.connection(query, function (data) {
-                console.log(data);
-                res.send({data: data});
+                res.send({ data: data });
             })
         }
-        
-        else if(req.query.p === undefined){
+
+        else if (req.query.p != undefined) {
+            var datatNeeded = " FORMAT(history.date_enter, 'yyyy-MM-dd HH:mm:ss') as date_enter,FORMAT(history.date_leave, 'yyyy-MM-dd HH:mm:ss') as date_leave, history.disease, history.treatment, history.chronic, history.bill"
+            var query = "select * from doctors where doctor_id=" + login.loginID + " select * from patients where first_name='" + req.query.p + "' and doctor_id=" + login.loginID + " select " + datatNeeded + " from patients join history on patients.patient_id = history.patient_id where first_name='" + req.query.p + "' and doctor_id=" + login.loginID + "";
+            ser.connection(query, function (data) {
+                res.render('doctorPatients', {
+                    p: 1,
+                    data: data,
+                    id: login.loginID,
+                    page: login.page
+                })
+            })
+        }
+
+        else {
             var query = "select * from doctors where doctor_id=" + login.loginID + " select * from patients where doctor_id=" + login.loginID + " select * from history where patient_id = any (select patient_id from patients where doctor_id=" + login.loginID + ")";
             ser.connection(query, function (data) {
                 res.render('doctorPatients', {
@@ -57,20 +69,7 @@ router.get('/myPatients', function (req, res, next) {
                     id: login.loginID,
                     page: login.page
                 })
-            })    
-        }
-
-        else{
-            var query = "select * from doctors where doctor_id=" + login.loginID + " select * from patients where patient_id=" + req.query.p + " select * from history where patient_id=" + req.query.p + " ";
-            ser.connection(query, function (data) {
-                console.log(data);
-                res.render('doctorPatients', {
-                    p: 1,
-                    data: data,
-                    id: login.loginID,
-                    page: login.page
-                })
-            })    
+            })
         }
 
     }
@@ -173,12 +172,54 @@ router.post('/rmv_doctor', function (req, res) {
         });
     }
     else {
-    res.render('error', {
-        id: login.loginID,
-        page: login.page,
-        not: "Admin"
-    });
-}
+        res.render('error', {
+            id: login.loginID,
+            page: login.page,
+            not: "Admin"
+        });
+    }
+});
+
+router.post('/edit_history', function (req, res) {
+    if (login.page == 'doc') {
+        if (req.query.dn != undefined) {
+
+            var update = "update history set treatment = '" + req.body.Treatment + "', bill = " + req.body.Bill + " where patient_id=" + req.query.dn + " and FORMAT(history.date_enter, 'yyyy-MM-dd HH:mm:ss')='" + req.query.d + "'";
+            ser.connection(update, function (noData) {
+
+                var datatNeeded = " FORMAT(history.date_enter, 'yyyy-MM-dd HH:mm:ss') as date_enter,FORMAT(history.date_leave, 'yyyy-MM-dd HH:mm:ss') as date_leave, history.disease, history.treatment, history.chronic, history.bill"
+                var query = "select * from doctors where doctor_id=" + login.loginID + " select * from patients where first_name='" + req.query.p + "' and doctor_id=" + login.loginID + " select " + datatNeeded + " from patients join history on patients.patient_id = history.patient_id where first_name='" + req.query.p + "' and doctor_id=" + login.loginID + "";
+                
+                ser.connection(query, function (data) {
+                    res.render('doctorPatients', {
+                        p: 1,
+                        data: data,
+                        id: login.loginID,
+                        page: login.page
+                    })
+                })
+            })
+        }
+        else {
+            var datatNeeded = " FORMAT(history.date_enter, 'yyyy-MM-dd HH:mm:ss') as date_enter,FORMAT(history.date_leave, 'yyyy-MM-dd HH:mm:ss') as date_leave, history.disease, history.treatment, history.chronic, history.bill"
+            var query = "select * from doctors where doctor_id=" + login.loginID + " select * from patients where first_name='" + req.query.p + "' and doctor_id=" + login.loginID + " select " + datatNeeded + " from patients join history on patients.patient_id = history.patient_id where patients.first_name='" + req.query.p + "' and FORMAT(history.date_enter, 'yyyy-MM-dd HH:mm:ss')='" + req.query.d + "'";
+            ser.connection(query, function (data) {
+                res.render('doctorPatients', {
+                    p: 2,
+                    data: data,
+                    id: login.loginID,
+                    page: login.page
+                })
+            })
+        }
+    }
+    else {
+        res.render('error', {
+            id: login.loginID,
+            page: login.page,
+            not: "Doctor"
+        });
+    }
 });
 
 
