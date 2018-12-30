@@ -226,7 +226,6 @@ router.post('/edit_history', function (req, res) {
 router.post('/edt_doctor', function (req, res) {
     
     let toBeEdited, value;
-    console.log(req.body.edit, req.body.firstName);
 
     if(req.body.firstName){
         toBeEdited = 'first_name';
