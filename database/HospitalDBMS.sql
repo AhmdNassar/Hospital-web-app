@@ -1,4 +1,4 @@
-use hospital1
+use hospital
 
 /*............... Drop Tables ............... */
 drop table salary
@@ -25,13 +25,13 @@ select * from ward_boy
 /*............... Create Tables ............... */
 
 create table nurse (
-nurse_id int ,
+nurse_id int identity(1,1) primary key  ,
 first_name varchar(20) ,
 last_name varchar(20) ,
 phone char(12) ,
 salary decimal(10,2),
 address varchar(40),
-primary key (nurse_id)
+
 )
 
 create table doctors (
@@ -73,17 +73,17 @@ primary key (admin_id)
 )
 
 create table ward_boy (
-ward_id int ,
+ward_id int identity(1,1) primary key ,
 first_name varchar(20) ,
 last_name varchar(20) ,
 phone char(12) ,
 salary decimal(10,2),
 address varchar(40),
-primary key (ward_id)
+
 )
 
 create table rooms (
-room_id int ,
+room_id int identity(1,1) ,
 type varchar(20) ,
 patient_id int ,
 primary key (room_id,type),
@@ -146,6 +146,7 @@ insert into doctors values('Mohammed', 'Mahmoud', 'Heart disease', '000', 100000
 insert into doctors values('Hamza', 'Younes', 'Hepatology', '000', 100000,'Tanta', '8:00', '12:00');
 insert into doctors values('Mahmoud', 'Essam', 'Heart disease', '000', 100000,'Tanta', '8:00', '12:00');
 insert into doctors values('Mahmoud', 'Samy', 'Dental', '000', 100000,'Tanta', '8:00', '12:00');
+insert into doctors values('ahmed', 'Samy', 'Dental', '000', 100000,'Tanta', '8:00', '12:00');
 
 select * from users
 insert into users values('Ammar', '123', 'Ammar@tanta.eg', 1, NULL, NULL, NULL);
@@ -161,16 +162,16 @@ insert into users values('Mahmoud', '012', 'MahmoudYo@tanta.eg', 10, NULL, NULL,
 
 
 select * from nurse
-insert into nurse values(1, 'hanen', 'Ahmed', '000', 500,'Mahala');
-insert into nurse values(2, 'gehad', 'Ahmed', '000', 50,'Nefia');
-insert into nurse values(3, 'salma', 'Ahmed', '000',600,'Nefia');
-insert into nurse values(4, 'shahenda', 'Ahmed', '000', 1000,'Mansoura');
-insert into nurse values(5, 'asmaa', 'Ahmed', '000', 1200,'Mahala');
-insert into nurse values(6, 'hala', 'Ahmed', '000', 1600,'Cairo');
-insert into nurse values(7, 'menna', 'Ahmed', '000', 200,'Tanta');
-insert into nurse values(8, 'eman', 'Ahmed', '000', 300,'Tanta');
-insert into nurse values(9, 'hasnaa', 'Ahmed', '000', 30000,'Tanta');
-insert into nurse values(10, 'bosaina', 'Ahmed', '000', 3000,'Tanta');
+insert into nurse values( 'hanen', 'Ahmed', '000', 500,'Mahala');
+insert into nurse values('gehad', 'Ahmed', '000', 50,'Nefia');
+insert into nurse values( 'salma', 'Ahmed', '000',600,'Nefia');
+insert into nurse values( 'shahenda', 'Ahmed', '000', 1000,'Mansoura');
+insert into nurse values( 'asmaa', 'Ahmed', '000', 1200,'Mahala');
+insert into nurse values( 'hala', 'Ahmed', '000', 1600,'Cairo');
+insert into nurse values( 'menna', 'Ahmed', '000', 200,'Tanta');
+insert into nurse values( 'eman', 'Ahmed', '000', 300,'Tanta');
+insert into nurse values( 'hasnaa', 'Ahmed', '000', 30000,'Tanta');
+insert into nurse values( 'bosaina', 'Ahmed', '000', 3000,'Tanta');
 
 
 select * from users
@@ -188,11 +189,11 @@ insert into users values('bosina', '123', 'bosaina@tanta.eg', NULL, NULL, 10, NU
 
 
 select * from ward_boy
-insert into ward_boy values(1, 'Hussein', 'Ahmed', '000', 500,'Mahala');
-insert into ward_boy values(2, 'Khaled', 'Ahmed', '000', 5000,'Nefia');
-insert into ward_boy values(3, 'Ahmed', 'Ahmed', '000',600,'Nefia');
-insert into ward_boy values(4, 'Shady', 'Ahmed', '000', 1000,'Mansoura');
-insert into ward_boy values(5, 'Eslam', 'Ahmed', '000', 100,'Mahala');
+insert into ward_boy values( 'Hussein', 'Ahmed', '000', 500,'Mahala');
+insert into ward_boy values( 'Khaled', 'Ahmed', '000', 5000,'Nefia');
+insert into ward_boy values( 'Ahmed', 'Ahmed', '000',600,'Nefia');
+insert into ward_boy values( 'Shady', 'Ahmed', '000', 1000,'Mansoura');
+insert into ward_boy values( 'Eslam', 'Ahmed', '000', 100,'Mahala');
 
 
 --no ward boys in users
