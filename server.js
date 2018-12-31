@@ -67,8 +67,8 @@ app.use(function (err, req, res, next) {
 // config for your database
 var config = {
     user: 'sa',
-    password: '123',
-    server: 'localhost\\SALIM',
+    password: '123456789',
+    server: 'localhost\\TESTINSTANCE',
     database: 'hospital',
     port: PORT,
     dialect: 'mssql'

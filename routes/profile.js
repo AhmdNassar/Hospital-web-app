@@ -128,7 +128,7 @@ router.post('/add_doctor', function (req, res) {
 
         var insertDoc = "insert into doctors (first_name,last_name,spc,phone,address) values ('" + req.body.firstName + "','" + req.body.lastName + "','" + req.body.docSpec + "','" + req.body.phoneNumber + "','" + req.body.address + "') select doctor_id from doctors where first_name ='" + req.body.firstName + "'";
         ser.connection(insertDoc, function (tmpData) {
-
+            console.log(tmpData);
             var insertUser = "insert into users (name,password,e_mail,doctor_id) values ('" + req.body.firstName + "','" + req.body.Pass + "','" + req.body.Mail + "'," + tmpData.recordset[0].doctor_id + ")";
             ser.connection(insertUser, function (noData) {
 
@@ -279,5 +279,140 @@ router.post('/edt_doctor', function (req, res) {
     });
 }
 });
+
+
+router.get('/Nurses', function (req, res, next) {
+    if (login.page == 'admin') {
+        var query = "select * from nurse select * from admin where admin_id = " + login.loginID + "";
+        ser.connection(query, function (data) {
+            res.render('adminNurse', {
+                data: data,
+                id: login.loginID,
+                page: login.page
+            });
+        });
+    }
+    else {
+        res.render('error', {
+            id: login.loginID,
+            page: login.page,
+            not: "Admin"
+        });
+    }
+});
+
+
+router.post('/rmv_nurse', function (req, res) {
+    if (login.page == 'admin') {
+
+        var deleteDoc = "delete from nurse where nurse_id = " + req.body.dell;
+        ser.connection(deleteDoc, function (noData) {
+
+            var query = "select * from nurse select * from admin where admin_id = " + login.loginID + "";
+            ser.connection(query, function (data) {
+
+                res.render('adminNurse', {
+                    data: data,
+                    id: login.loginID,
+                    page: login.page
+                });
+            });
+        });
+    }
+    else {
+        res.render('error', {
+            id: login.loginID,
+            page: login.page,
+            not: "Admin"
+        });
+    }
+});
+
+router.post('/add_nurse', function (req, res) {
+    if (login.page == 'admin') {
+
+        var insertNurse = "insert into nurse (first_name,last_name,phone,address) values ('" + req.body.firstName + "','" + req.body.lastName + "','"  + req.body.phoneNumber + "','" + req.body.address + "') select nurse_id from nurse where first_name ='" + req.body.firstName + "'";
+        ser.connection(insertNurse, function (tmpData) {
+            var insertUser = "insert into users (name,password,e_mail,nurse_id) values ('" + req.body.firstName + "','" + req.body.Pass + "','" + req.body.Mail + "'," + tmpData.recordset[0].nurse_id + ")";
+            // insert nurse into users don't work !! 
+            ser.connection(insertUser, function (noData) {
+
+                var query = "select * from nurse select * from admin where admin_id = " + login.loginID + "";
+                ser.connection(query, function (data) {
+
+                    res.render('adminNurse', {
+                        data: data,
+                        id: login.loginID,
+                        page: login.page
+                    });
+                });
+            });
+        });
+    }
+    else {
+        res.render('error', {
+            id: login.loginID,
+            page: login.page,
+            not: "Admin"
+        });
+    }
+});
+
+
+
+router.post('/edt_nurse', function (req, res) {
+    
+    let toBeEdited, value;
+
+    if(req.body.firstName){
+        toBeEdited = 'first_name';
+        value = req.body.firstName;
+    }
+    else if(req.body.lastName){
+        toBeEdited = 'last_name';
+        value = req.body.lastName;
+    }
+    
+    else if(req.body.phoneNumber){
+        toBeEdited = 'phone';
+        value = req.body.phoneNumber;
+    }
+    else if(req.body.address){
+        toBeEdited = 'address';
+        value = req.body.address;
+    }
+    else{
+        res.render('EditingError', {
+            id: login.loginID,
+            page: login.page,
+        });
+        return;
+    }
+
+    if (login.page == 'admin') {
+
+        var editNurse = "UPDATE nurse SET " + toBeEdited + " = '" + value + "' where nurse_id = " + req.body.edit;
+        ser.connection(editNurse, function (noData) {
+
+            var query = "select * from nurse select * from admin where admin_id = " + login.loginID + "";
+            ser.connection(query, function (data) {
+
+                res.render('adminNurse', {
+                    data: data,
+                    id: login.loginID,
+                    page: login.page
+                });
+            });
+        });
+    }
+    else {
+    res.render('error', {
+        id: login.loginID,
+        page: login.page,
+        not: "Admin"
+    });
+}
+});
+
 
 module.exports = router;
