@@ -280,7 +280,7 @@ router.post('/edt_doctor', function (req, res) {
 }
 });
 
-
+///////////// handl nurse /////////////////////////
 router.get('/Nurses', function (req, res, next) {
     if (login.page == 'admin') {
         var query = "select * from nurse select * from admin where admin_id = " + login.loginID + "";
@@ -414,5 +414,168 @@ router.post('/edt_nurse', function (req, res) {
 }
 });
 
+//////////////////// handl rooms //////////////////////
+router.get('/rooms', function (req, res, next) {
+    if (login.page == 'admin') {
+        var query = "select * from rooms select * from admin where admin_id = " + login.loginID + "";
+        ser.connection(query, function (data) {
+            res.render('adminRoom', {
+                data: data,
+                id: login.loginID,
+                page: login.page
+            });
+        });
+    }
+    else {
+        res.render('error', {
+            id: login.loginID,
+            page: login.page,
+            not: "Admin"
+        });
+    }
+});
 
+
+router.post('/add_room', function (req, res) {
+    if (login.page == 'admin') {
+
+        var insertRoom = "insert into rooms (type,patient_id) values ('" + req.body.roomType + "','"  + req.body.pid + "')";
+        
+        ser.connection(insertRoom   , function (noData) {
+
+            var query = "select * from rooms select * from admin where admin_id = " + login.loginID + "";
+            ser.connection(query, function (data) {
+
+                res.render('adminRoom', {
+                    data: data,
+                    id: login.loginID,
+                    page: login.page
+                });
+            });
+        });
+        
+    }
+    else {
+        res.render('error', {
+            id: login.loginID,
+            page: login.page,
+            not: "Admin"
+        });
+    }
+});
+
+
+router.post('/rmv_room', function (req, res) {
+    if (login.page == 'admin') {
+
+        var deleteDoc = "delete from rooms where room_id = " + req.body.dell;
+        ser.connection(deleteDoc, function (noData) {
+
+            var query = "select * from rooms select * from admin where admin_id = " + login.loginID + "";
+            ser.connection(query, function (data) {
+
+                res.render('adminRoom', {
+                    data: data,
+                    id: login.loginID,
+                    page: login.page
+                });
+            });
+        });
+    }
+    else {
+        res.render('error', {
+            id: login.loginID,
+            page: login.page,
+            not: "Admin"
+        });
+    }
+});
+/*
+router.post('/add_nurse', function (req, res) {
+    if (login.page == 'admin') {
+
+        var insertNurse = "insert into nurse (first_name,last_name,phone,address) values ('" + req.body.firstName + "','" + req.body.lastName + "','"  + req.body.phoneNumber + "','" + req.body.address + "') select nurse_id from nurse where first_name ='" + req.body.firstName + "'";
+        ser.connection(insertNurse, function (tmpData) {
+            var insertUser = "insert into users (name,password,e_mail,nurse_id) values ('" + req.body.firstName + "','" + req.body.Pass + "','" + req.body.Mail + "'," + tmpData.recordset[0].nurse_id + ")";
+            // insert nurse into users don't work !! 
+            ser.connection(insertUser, function (noData) {
+
+                var query = "select * from nurse select * from admin where admin_id = " + login.loginID + "";
+                ser.connection(query, function (data) {
+
+                    res.render('adminNurse', {
+                        data: data,
+                        id: login.loginID,
+                        page: login.page
+                    });
+                });
+            });
+        });
+    }
+    else {
+        res.render('error', {
+            id: login.loginID,
+            page: login.page,
+            not: "Admin"
+        });
+    }
+});
+
+
+
+router.post('/edt_nurse', function (req, res) {
+    
+    let toBeEdited, value;
+
+    if(req.body.firstName){
+        toBeEdited = 'first_name';
+        value = req.body.firstName;
+    }
+    else if(req.body.lastName){
+        toBeEdited = 'last_name';
+        value = req.body.lastName;
+    }
+    
+    else if(req.body.phoneNumber){
+        toBeEdited = 'phone';
+        value = req.body.phoneNumber;
+    }
+    else if(req.body.address){
+        toBeEdited = 'address';
+        value = req.body.address;
+    }
+    else{
+        res.render('EditingError', {
+            id: login.loginID,
+            page: login.page,
+        });
+        return;
+    }
+
+    if (login.page == 'admin') {
+
+        var editNurse = "UPDATE nurse SET " + toBeEdited + " = '" + value + "' where nurse_id = " + req.body.edit;
+        ser.connection(editNurse, function (noData) {
+
+            var query = "select * from nurse select * from admin where admin_id = " + login.loginID + "";
+            ser.connection(query, function (data) {
+
+                res.render('adminNurse', {
+                    data: data,
+                    id: login.loginID,
+                    page: login.page
+                });
+            });
+        });
+    }
+    else {
+    res.render('error', {
+        id: login.loginID,
+        page: login.page,
+        not: "Admin"
+    });
+}
+});
+
+*/
 module.exports = router;
